@@ -1,0 +1,43 @@
+# frozen_string_literal: true
+
+# Provides enforcement of declared field for ActiveRecord models.
+module FieldEnforcement
+  extend ActiveSupport::Concern
+
+  included do
+    class_attribute :declared_attributes, default: []
+    after_initialize :enforce_declared_attributes
+  end
+
+  # = Active Record \Attributes
+  module ClassMethods
+    # Declares a field with enforcement.
+    # @param name [Symbol] the name of the attribute
+    # @param type [Type] the type of the attribute
+    # @param null [Boolean] whether the attribute can be null (default: true)
+    # @param default [Object] the default value for the attribute (default: nil)
+    # @param options [Hash] additional options passed to the superclass
+    # @return [void]
+    def field(name, type, null: true, default: nil, **options)
+      declared_attributes << OpenStruct.new(name: name.to_s, type: type, null: null, default: default)
+      super(name, type, **options)
+    end
+  end
+
+  private
+
+  def enforce_declared_attributes
+    database_columns = self.class.column_names
+    declared_attributes_names = declared_attributes.map(&:name)
+    extra_attributes = declared_attributes_names - database_columns
+    missing_attributes = database_columns - declared_attributes_names
+
+    unless extra_attributes.empty?
+      raise "Declared attributes not found in database schema for #{self.class.name}: #{extra_attributes.join(', ')}"
+    end
+
+    unless missing_attributes.empty?
+      raise "Attributes must be declared in #{self.class.name}: #{missing_attributes.join(', ')}"
+    end
+  end
+end
