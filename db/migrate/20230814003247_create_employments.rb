@@ -1,4 +1,4 @@
-class CreateEmployments < ActiveRecord::Migration[7.1]
+class CreateEmployments < ActiveRecord::Migration[7.0]
   def change
     create_table :employments do |t|
       t.references :company, null: false, foreign_key: true
