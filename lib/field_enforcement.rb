@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
-puts "Loading 111 #{__FILE__}"
-
 # Provides enforcement of declared field for ActiveRecord models.
 module FieldEnforcement
-  # Declares an field with enforcement.
-  # @param name [Symbol] the name of the attribute
-  # @param type [Type] the type of the attribute
-  # @param null [Boolean] whether the attribute can be null (default: true)
-  # @param default [Object] the default value for the attribute (default: nil)
-  # @param options [Hash] additional options passed to the superclass
+  # Declares an field with enforcement
+  # @param name [Symbol] the name of the field
+  # @param type [Symbol, String, Class] the type of the filed
   # @return [void]
-  def field(name, type, null: true, default: nil, **options)
-    declared_fields << OpenStruct.new(name: name.to_s, type: type, null: null, default: default)
+  # @!macro [attach] field
+  #   @attribute $1
+  #   @return [$2]
+  def field(name, type)
+    declared_fields << OpenStruct.new(name: name.to_s, type:) # TODO: null:, default:
   end
 
   def self.extended(base)

@@ -103,6 +103,38 @@
 
 
 
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-instance_method" title="#name (instance method)">#<strong>name</strong>  &#x21d2; void, type </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Declares an field with enforcement.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
 
 
 
@@ -148,7 +180,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#field-instance_method" title="#field (instance method)">#<strong>field</strong>(name, type, null: true, default: nil, **options)  &#x21d2; void </a>
+      <a href="#field-instance_method" title="#field (instance method)">#<strong>field</strong>(name, type)  &#x21d2; void, type </a>
     
 
     
@@ -173,6 +205,112 @@
   
 
 
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="name=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="name-instance_method">
+  
+    #<strong>name</strong>  &#x21d2; <tt>void</tt>, <tt>type</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Declares an field with enforcement</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the field</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>type</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>, <tt>String</tt>, <tt>Class</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the type of the filed</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>type</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13
+14</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 12</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_field'>field</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_declared_fields'>declared_fields</span> <span class='op'>&lt;&lt;</span> <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='label'>type:</span><span class='rparen'>)</span> <span class='comment'># TODO: null:, default:
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
@@ -193,6 +331,8 @@
       <pre class="lines">
 
 
+16
+17
 18
 19
 20
@@ -220,12 +360,10 @@
 42
 43
 44
-45
-46
-47</pre>
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_extended'>extended</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_base'>base</span>
@@ -271,7 +409,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="field-instance_method">
   
-    #<strong>field</strong>(name, type, null: true, default: nil, **options)  &#x21d2; <tt>void</tt> 
+    #<strong>field</strong>(name, type)  &#x21d2; <tt>void</tt>, <tt>type</tt> 
   
 
   
@@ -279,8 +417,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Declares an field with enforcement.</p>
+    
+<p>Declares an field with enforcement</p>
 
 
   </div>
@@ -300,7 +438,7 @@
       
         &mdash;
         <div class='inline'>
-<p>the name of the attribute</p>
+<p>the name of the field</p>
 </div>
       
     </li>
@@ -310,71 +448,41 @@
         <span class='name'>type</span>
       
       
-        <span class='type'>(<tt>Type</tt>)</span>
+        <span class='type'>(<tt>Symbol</tt>, <tt>String</tt>, <tt>Class</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'>
-<p>the type of the attribute</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>null</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>true</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>whether the attribute can be null (default: true)</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>default</span>
-      
-      
-        <span class='type'>(<tt>Object</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the default value for the attribute (default: nil)</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>options</span>
-      
-      
-        <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>additional options passed to the superclass</p>
+<p>the type of the filed</p>
 </div>
       
     </li>
   
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>type</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -382,16 +490,16 @@
       <pre class="lines">
 
 
-14
-15
-16</pre>
+12
+13
+14</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 12</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_field'>field</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='label'>null:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_declared_fields'>declared_fields</span> <span class='op'>&lt;&lt;</span> <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='label'>null:</span> <span class='id identifier rubyid_null'>null</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='id identifier rubyid_default'>default</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_field'>field</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_declared_fields'>declared_fields</span> <span class='op'>&lt;&lt;</span> <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='label'>type:</span><span class='rparen'>)</span> <span class='comment'># TODO: null:, default:
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -402,7 +510,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 14 20:46:29 2023 by
+  Generated on Tue Aug 15 03:31:51 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>
