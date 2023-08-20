@@ -4,6 +4,7 @@
 class Company < ApplicationRecord
   field :id, ID
   field :name, String
+  # field :address, String # <--- This is not in the db yet (uncomment to test migration generation)
   field :description, String
   field :created_at, ISO8601DateTime
   field :updated_at, ISO8601DateTime
