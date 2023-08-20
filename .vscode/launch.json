@@ -6,11 +6,16 @@
   "configurations": [
     {
       "type": "rdbg",
-      "name": "Debug current file with rdbg",
+      "name": "Debug rails with rdbg",
       "request": "launch",
-      "script": "${file}",
-      "args": [],
-      "askParameters": true
+      "command": "",
+      "env": {
+        "RAILS_MAX_THREADS": 1,
+        "WEB_CONCURRENCY": 0
+      },
+      "script": "bin/rails",
+      "args": ["server", "-p", "3050"],
+      "askParameters": false
     },
     {
       "type": "rdbg",

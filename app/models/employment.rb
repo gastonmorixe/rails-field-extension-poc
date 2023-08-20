@@ -2,11 +2,9 @@
 
 # Employment is a relationship between User and Company
 class Employment < ApplicationRecord
-  field :id, :id
-  field :company_id, :id
-  field :user_id, :id
-  field :created_at, :datetime
-  field :updated_at, :datetime
+  field :id, ID
+  field :created_at, ISO8601DateTime
+  field :updated_at, ISO8601DateTime
 
   belongs_to :user
   belongs_to :company

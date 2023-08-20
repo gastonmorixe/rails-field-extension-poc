@@ -5,3 +5,6 @@ erd:
 
 yard:
 	yard doc --protected --private lib/**/*.rb app/**/*.rb
+
+start-debug:
+	rdbg --nonstop --open -c -- bin/rails server -p 3050

@@ -2,10 +2,11 @@
 
 # Company model
 class Company < ApplicationRecord
-  field :id, :integer
-  field :name, :string
-  field :created_at, :datetime
-  field :updated_at, :datetime
+  field :id, ID
+  field :name, String
+  field :description, String
+  field :created_at, ISO8601DateTime
+  field :updated_at, ISO8601DateTime
 
   has_many :employments
   has_many :employees, through: :employments, source: :user
