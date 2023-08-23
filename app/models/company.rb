@@ -4,15 +4,10 @@
 class Company < ApplicationRecord
   field :id, ID
   field :name, String
-  # field :address, String # <--- This is not in the db yet (uncomment to test migration generation)
-  field :description, String
+  field :phone, Int
   field :created_at, ISO8601DateTime
   field :updated_at, ISO8601DateTime
 
   has_many :employments
   has_many :employees, through: :employments, source: :user
-
-  def description
-    "This is a company called #{name} and has #{employees.size} employees."
-  end
 end

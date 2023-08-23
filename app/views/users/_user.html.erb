@@ -1,7 +1,19 @@
+<h2>User <%= user.id %></h2>
 <div id="<%= dom_id user %>">
-  <p>
-    <strong>Name:</strong>
-    <%= user.name %>
-  </p>
-
+  <table>
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% user.attributes.each do |attr_name, attr_value| %>
+        <tr>
+          <td><strong><%= attr_name.humanize %>:</strong></td>
+          <td><%= attr_value %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

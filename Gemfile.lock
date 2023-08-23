@@ -89,6 +89,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     ast (2.4.2)
+    awesome_print (1.9.2)
     backport (1.2.0)
     base64 (0.1.1)
     benchmark (0.2.1)
@@ -105,6 +106,8 @@ GEM
     e2mmap (0.1.0)
     error_highlight (0.5.1)
     erubi (1.12.0)
+    formtastic (4.0.0)
+      actionpack (>= 5.2.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
     graphiql-rails (1.9.0)
@@ -258,8 +261,10 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  awesome_print
   debug
   error_highlight (>= 0.4.0)
+  formtastic (~> 4.0)
   graphiql-rails
   graphql
   jsbundling-rails
@@ -278,4 +283,4 @@ RUBY VERSION
    ruby 3.2.2p53
 
 BUNDLED WITH
-   2.4.18
+   2.4.19

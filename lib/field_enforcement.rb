@@ -3,9 +3,30 @@
 # Provides enforcement of declared field for ActiveRecord models.
 module FieldEnforcement
   module Utils
+    class PendingFieldEnforcementMigrationError < StandardError
+      include ActiveSupport::ActionableError
+
+      action 'Update snapshot' do
+        models = FieldEnforcement::Utils.active_record_models
+        FieldEnforcement::Utils.store_field_snapshot(models)
+      end
+
+      action 'Write migrations' do
+        models = FieldEnforcement::Utils.active_record_models
+        changes = FieldEnforcement::Utils.detect_changes(models)
+        FieldEnforcement::Utils.generate_migrations(changes, write: true)
+        # todo save the last field snapshot updated at somewhere and compare with last mgiration
+        FieldEnforcement::Utils.store_field_snapshot(models, write: true)
+      end
+
+      action 'Run db:migrations' do
+        ActiveRecord::Tasks::DatabaseTasks.migrate
+      end
+    end
+
     class << self
       GQL_TO_RAILS_TYPE_MAP = {
-        GraphQL::Types::String => :string,
+        ::GraphQL::Types::String => :string,
         ::GraphQL::Types::Int => :integer,
         ::GraphQL::Types::Float => :float,
         ::GraphQL::Types::Boolean => :boolean,
@@ -16,27 +37,145 @@ module FieldEnforcement
         ::GraphQL::Types::BigInt => :bigint
       }
 
-      def generate_migration_code(obj, field_name, field_type)
-        obj_class = obj.class
-        class_name = obj_class.name
-        table_name = obj_class.table_name # class_name.tableize
+      # TODO: mapper can be different or custom
 
-        field_type_for_db = GQL_TO_RAILS_TYPE_MAP[field_type]
-        if field_type_for_db.nil?
-          raise "Declared field (#{field_name}) of type (#{field_type}) in class #{class_name} missing type mapping"
+      def active_record_models
+        Rails.application.eager_load! # Ensure all models are loaded
+
+        ActiveRecord::Base.descendants.reject do |model|
+          !(model.is_a?(Class) && model < ApplicationRecord) ||
+            model.abstract_class? ||
+            model.name.nil? ||
+            model.name == 'ActiveRecord::SchemaMigration'
+        end
+      end
+
+      def store_field_snapshot(models, write: false)
+        snapshot = models.map do |model|
+          [model.name, model.declared_fields.map { |f| [f.name, f.type.to_s] }.to_h]
+        end.to_h
+
+        snapshot[:__metadata__] = {
+          updated_at: Time.now.utc.strftime('%Y%m%d%H%M%S')
+        }
+
+        snapshot_in_json = JSON.pretty_generate(snapshot)
+        puts snapshot_in_json
+
+        if write == true
+          snapshot_path = Rails.root.join('db', 'field_snapshot.json')
+          File.write(snapshot_path, snapshot_in_json)
+          puts "Field snapshot file udpated #{snapshot_path}"
         end
 
-        migration_class_name = "Add#{field_name.to_s.camelize}To#{class_name}"
-        migration_filename = "#{Time.now.utc.strftime('%Y%m%d%H%M%S')}_#{migration_class_name.underscore}.rb"
-        migration_code = <<-MIGRATION
-class #{migration_class_name} < ActiveRecord::Migration[#{ActiveRecord::Migration.current_version}]
-  def change
-    add_column :#{table_name}, :#{field_name}, :#{field_type_for_db}
-  end
-end
-MIGRATION
+        snapshot_in_json
+      end
 
-        [migration_filename, migration_code]
+      def detect_changes(models)
+        changes = {}
+
+        # Load the snapshot
+        snapshot_path = Rails.root.join('db', 'field_snapshot.json')
+        snapshot = JSON.parse(File.read(snapshot_path))
+
+        snapshot_metadata = snapshot[:__metadata__]
+        puts "snapshot_metadata: #{snapshot_metadata}"
+        snapshot.delete(:__metadata__)
+
+        models.each do |model|
+          model_name = model.name
+          declared_fields = model.declared_fields.map { |f| [f.name, f.type] }.to_h # f.type.to_s
+          previous_fields = snapshot[model_name] || {}
+
+          # Detect changes
+          model_changes = {
+            added: [],
+            removed: [],
+            renamed: [],
+            type_changed: []
+          }
+
+          declared_fields.each do |name, type|
+            if previous_fields[name]
+              if previous_fields[name] != type.to_s
+                model_changes[:type_changed] << { name:, from: previous_fields[name], to: type }
+              end
+            else
+              # Check for renames
+              renamed_from = previous_fields.keys.find do |prev_name|
+                previous_fields[prev_name] == type.to_s && !declared_fields[prev_name]
+              end
+              if renamed_from
+                model_changes[:renamed] << { from: renamed_from, to: name }
+              else
+                model_changes[:added] << { name:, type: }
+              end
+            end
+          end
+
+          previous_fields.each do |name, _|
+            model_changes[:removed] << ({ name: }) unless declared_fields[name]
+          end
+
+          changes[model_name] = model_changes unless model_changes.values.all?(&:empty?)
+        end
+
+        # Update the snapshot
+        # store_field_snapshot(models)
+
+        changes
+      end
+
+      def generate_migrations(changes, write: false)
+        puts "\n\nMigrations code:\n\n"
+
+        index = 0
+        changes.map do |model_name, model_changes|
+          migration_class_name = "#{model_name}Migration"
+
+          migration_code = []
+          migration_code << "class #{migration_class_name} < ActiveRecord::Migration[#{ActiveRecord::Migration.current_version}]"
+          migration_code << '  def change'
+
+          model_changes[:added].each do |change|
+            field_type = change[:type]
+            puts field_type
+            puts field_type.class
+            field_type_for_db = GQL_TO_RAILS_TYPE_MAP[field_type]
+            puts GQL_TO_RAILS_TYPE_MAP
+            migration_code << "    add_column :#{model_name.tableize}, :#{change[:name]}, :#{field_type_for_db}"
+          end
+
+          model_changes[:removed].each do |change|
+            migration_code << "    remove_column :#{model_name.tableize}, :#{change[:name]}"
+          end
+
+          model_changes[:renamed].each do |change|
+            migration_code << "    rename_column :#{model_name.tableize}, :#{change[:from]}, :#{change[:to]}"
+          end
+
+          model_changes[:type_changed].each do |change|
+            migration_code << "    change_column :#{model_name.tableize}, :#{change[:name]}, :#{change[:to]}"
+          end
+
+          migration_code << '  end'
+          migration_code << 'end'
+
+          puts migration_code
+          puts "\n"
+
+          migration_filename = nil
+          if write == true
+            migration_filename = "#{Time.now.utc.strftime('%Y%m%d%H%M%S').to_i + index}_#{migration_class_name.underscore}.rb"
+            migration_path = Rails.root.join('db', 'migrate', migration_filename)
+            File.write(migration_path, migration_code.join("\n"))
+            puts "Migration saved at #{migration_path}"
+          end
+
+          index += 1
+
+          [migration_code, migration_filename]
+        end
       end
     end
   end
@@ -124,38 +263,57 @@ MIGRATION
           extra_fields = declared_fields_names - database_columns
           # Model may have extra fields that are not in the database schema
           # but are defined in the model. This is useful for computed fields.
-          extra_fields = extra_fields.filter{ |f| !self.respond_to?(f) }
+          extra_fields = extra_fields.filter { |f| !respond_to?(f) }
           associations_columns = self.class.reflections.values.map do |r|
             r.foreign_key
           end
           missing_fields = database_columns - declared_fields_names - associations_columns
 
-          extra_fields.each do |field_name|
-            # Generate the migration code for this field
-            field = self.class.declared_fields.find { |df| df.name == field_name }
-            migration_code = FieldEnforcement::Utils.generate_migration_code(self, field.name, field.type)
+          puts "debug: extra_fields: #{extra_fields}"
+          puts "debug: missing_fields: #{missing_fields}"
 
-            error_message = "Declared field '#{field_name}' not found in db for model #{self.class.name}."
-            puts "\n\n\n----------\n"
-            puts error_message
-            puts "This is what the migration should look like:\n\n"
-            puts "# #{migration_code[0]}"
-            puts migration_code[1]
-            puts "----------\n\n\n"
-            raise error_message
-            # puts 'Do you want to generate it? [y/N]'
+          models = FieldEnforcement::Utils.active_record_models
+          changes = FieldEnforcement::Utils.detect_changes(models)
+          # FieldEnforcement::Utils.store_field_snapshot(models)
+          migrations = FieldEnforcement::Utils.generate_migrations(changes)
 
-            # response = gets.chomp
-            # if response.downcase == 'y'
-            #   # TODO: create_migration_file(self.class.name, field, migration_code)
-            #   puts "Migration created! Don't forget to run the migration."
-            # else
-            #   puts 'Migration was not created.'
-            # end
+          puts "----------\n\n\n"
+          puts "changes: #{changes}"
+          puts "migration: #{migrations}"
+          puts "----------\n\n\n"
+
+          # extra_fields.each do |field_name|
+          #   # Generate the migration code for this field
+          #   # field = self.class.declared_fields.find { |df| df.name == field_name }
+          #   # migration_code = FieldEnforcement::Utils.generate_migration_code(self, field.name, field.type)
+
+          #   error_message = "Declared field '#{field_name}' not found in db for model #{self.class.name}."
+          #   puts "\n\n\n----------\n"
+          #   puts error_message
+          #   # puts "This is what the migration should look like:\n\n"
+          #   # puts "# #{migration_code[0]}"
+          #   # puts migration_code[1]
+          #   puts "----------\n\n\n"
+          #   raise error_message
+          #   # puts 'Do you want to generate it? [y/N]'
+
+          #   # response = gets.chomp
+          #   # if response.downcase == 'y'
+          #   #   # TODO: create_migration_file(self.class.name, field, migration_code)
+          #   #   puts "Migration created! Don't forget to run the migration."
+          #   # else
+          #   #   puts 'Migration was not created.'
+          #   # end
+          # end
+
+          unless extra_fields.empty?
+            error_message = "Detected declared extra field#{extra_fields.size > 1 ? 's' : ''} in #{self.class.name}: #{extra_fields.join(', ')}. Please create the appropiate db migration or define the method#{extra_fields.size > 1 ? 's' : ''} in the model."
+            raise Utils::PendingFieldEnforcementMigrationError.new(error_message)
           end
 
           unless missing_fields.empty?
-            raise "fields must be declared in #{self.class.name}: #{missing_fields.join(', ')}"
+            error_message = "fields must be declared in #{self.class.name}: #{missing_fields.join(', ')}"
+            raise Utils::PendingFieldEnforcementMigrationError.new(error_message)
           end
         end
       end

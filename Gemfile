@@ -22,6 +22,10 @@ gem 'solargraph-rails', '~> 1.1.0'
 
 gem 'graphql'
 
+gem 'formtastic', '~> 4.0'
+
+gem 'awesome_print', require: 'ap'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

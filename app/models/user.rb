@@ -4,6 +4,9 @@
 class User < ApplicationRecord
   field :id, ID
   field :name, String
+  field :age, Int
+  field :zipcode, Int
+  field :notes, String
   field :created_at, ISO8601DateTime
   field :updated_at, ISO8601DateTime
 

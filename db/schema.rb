@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_14_003247) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_23_045713) do
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "phone"
   end
 
   create_table "employments", force: :cascade do |t|
@@ -30,6 +31,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_003247) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "age"
+    t.integer "zipcode"
+    t.string "notes"
   end
 
   add_foreign_key "employments", "companies"

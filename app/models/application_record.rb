@@ -11,7 +11,7 @@ class ApplicationRecord < ActiveRecord::Base
   #    field :id, ID
   # instead of
   #    field :id, ::GraphQL::Types::ID
-  include ::GraphQL::Types
+  include GraphQL::Types
 
   # TODO Interface PersistedRecord with id, created_at and updated_at which automatically is added here to all subclasses
 end
