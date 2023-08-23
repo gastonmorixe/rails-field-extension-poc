@@ -15,7 +15,7 @@ module FieldEnforcement
         models = FieldEnforcement::Utils.active_record_models
         changes = FieldEnforcement::Utils.detect_changes(models)
         FieldEnforcement::Utils.generate_migrations(changes, write: true)
-        # todo save the last field snapshot updated at somewhere and compare with last mgiration
+        # TODO: save the last field snapshot updated at somewhere and compare with last mgiration
         FieldEnforcement::Utils.store_field_snapshot(models, write: true)
       end
 
@@ -25,6 +25,7 @@ module FieldEnforcement
     end
 
     class << self
+      # TODO: mapper can be different or custom
       GQL_TO_RAILS_TYPE_MAP = {
         ::GraphQL::Types::String => :string,
         ::GraphQL::Types::Int => :integer,
@@ -36,8 +37,6 @@ module FieldEnforcement
         ::GraphQL::Types::JSON => :json,
         ::GraphQL::Types::BigInt => :bigint
       }
-
-      # TODO: mapper can be different or custom
 
       def active_record_models
         Rails.application.eager_load! # Ensure all models are loaded
@@ -150,6 +149,7 @@ module FieldEnforcement
             migration_code << "    remove_column :#{model_name.tableize}, :#{change[:name]}"
           end
 
+          # TODO: Improve rename algo for fields with same type
           model_changes[:renamed].each do |change|
             migration_code << "    rename_column :#{model_name.tableize}, :#{change[:from]}, :#{change[:to]}"
           end
@@ -305,6 +305,9 @@ module FieldEnforcement
           #   #   puts 'Migration was not created.'
           #   # end
           # end
+
+          # TODO: Throw changes diff and migration code to web
+          # TODO: Throw if a method is defined and it doesn't have a field (unless it's private?)
 
           unless extra_fields.empty?
             error_message = "Detected declared extra field#{extra_fields.size > 1 ? 's' : ''} in #{self.class.name}: #{extra_fields.join(', ')}. Please create the appropiate db migration or define the method#{extra_fields.size > 1 ? 's' : ''} in the model."
