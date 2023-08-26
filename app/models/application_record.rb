@@ -5,7 +5,8 @@ require 'field_enforcement'
 # The ApplicationRecord class is the base class for all models in the application.
 class ApplicationRecord < ActiveRecord::Base
   primary_abstract_class
-  extend FieldEnforcement
+  # extend FieldEnforcement
+  include FieldEnforcement
 
   # Allows us to define a field without field like this
   #    field :id, ID

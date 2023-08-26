@@ -89,7 +89,7 @@
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Utils/PendingFieldEnforcementMigrationError.html" title="FieldEnforcement::Utils::PendingFieldEnforcementMigrationError (class)">PendingFieldEnforcementMigrationError</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Utils/FieldEnforcementError.html" title="FieldEnforcement::Utils::FieldEnforcementError (class)">FieldEnforcementError</a></span>, <span class='object_link'><a href="Utils/FieldEnforcementMismatchError.html" title="FieldEnforcement::Utils::FieldEnforcementMismatchError (class)">FieldEnforcementMismatchError</a></span>, <span class='object_link'><a href="Utils/FieldEnforcementUnknownType.html" title="FieldEnforcement::Utils::FieldEnforcementUnknownType (class)">FieldEnforcementUnknownType</a></span>
     
   
 </p>
@@ -102,8 +102,28 @@
 
     <dl class="constants">
       
-        <dt id="GQL_TO_RAILS_TYPE_MAP-constant" class="">GQL_TO_RAILS_TYPE_MAP =
+        <dt id="LOGGER-constant" class="">LOGGER =
           
+        </dt>
+        <dd><pre class="code"><span class='kw'>begin</span>
+  <span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='gvar'>$stdout</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_level'>level</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='op'>::</span><span class='const'>INFO</span>
+  <span class='id identifier rubyid_logger'>logger</span>
+<span class='kw'>end</span></pre></dd>
+      
+        <dt id="GQL_TO_RAILS_TYPE_MAP-constant" class="">GQL_TO_RAILS_TYPE_MAP =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>TODO: mapper can be different or custom</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
         <dd><pre class="code"><span class='lbrace'>{</span>
   <span class='op'>::</span><span class='const'>GraphQL</span><span class='op'>::</span><span class='const'>Types</span><span class='op'>::</span><span class='const'>String</span> <span class='op'>=&gt;</span> <span class='symbol'>:string</span><span class='comma'>,</span>
@@ -115,6 +135,21 @@
   <span class='op'>::</span><span class='const'>GraphQL</span><span class='op'>::</span><span class='const'>Types</span><span class='op'>::</span><span class='const'>ISO8601Date</span> <span class='op'>=&gt;</span> <span class='symbol'>:date</span><span class='comma'>,</span>
   <span class='op'>::</span><span class='const'>GraphQL</span><span class='op'>::</span><span class='const'>Types</span><span class='op'>::</span><span class='const'>JSON</span> <span class='op'>=&gt;</span> <span class='symbol'>:json</span><span class='comma'>,</span>
   <span class='op'>::</span><span class='const'>GraphQL</span><span class='op'>::</span><span class='const'>Types</span><span class='op'>::</span><span class='const'>BigInt</span> <span class='op'>=&gt;</span> <span class='symbol'>:bigint</span>
+<span class='rbrace'>}</span></pre></dd>
+      
+        <dt id="RAILS_TO_GQL_TYPE_MAP-constant" class="">RAILS_TO_GQL_TYPE_MAP =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='comment'># id: ::GraphQL::Types::String,
+</span>  <span class='label'>string:</span> <span class='op'>::</span><span class='const'>GraphQL</span><span class='op'>::</span><span class='const'>Types</span><span class='op'>::</span><span class='const'>String</span><span class='comma'>,</span>
+  <span class='label'>integer:</span> <span class='op'>::</span><span class='const'>GraphQL</span><span class='op'>::</span><span class='const'>Types</span><span class='op'>::</span><span class='const'>Int</span><span class='comma'>,</span>
+  <span class='label'>float:</span> <span class='op'>::</span><span class='const'>GraphQL</span><span class='op'>::</span><span class='const'>Types</span><span class='op'>::</span><span class='const'>Float</span><span class='comma'>,</span>
+  <span class='label'>boolean:</span> <span class='op'>::</span><span class='const'>GraphQL</span><span class='op'>::</span><span class='const'>Types</span><span class='op'>::</span><span class='const'>Boolean</span><span class='comma'>,</span>
+  <span class='label'>datetime:</span> <span class='op'>::</span><span class='const'>GraphQL</span><span class='op'>::</span><span class='const'>Types</span><span class='op'>::</span><span class='const'>ISO8601DateTime</span><span class='comma'>,</span>
+  <span class='label'>date:</span> <span class='op'>::</span><span class='const'>GraphQL</span><span class='op'>::</span><span class='const'>Types</span><span class='op'>::</span><span class='const'>ISO8601Date</span><span class='comma'>,</span>
+  <span class='label'>json:</span> <span class='op'>::</span><span class='const'>GraphQL</span><span class='op'>::</span><span class='const'>Types</span><span class='op'>::</span><span class='const'>JSON</span><span class='comma'>,</span>
+  <span class='label'>bigint:</span> <span class='op'>::</span><span class='const'>GraphQL</span><span class='op'>::</span><span class='const'>Types</span><span class='op'>::</span><span class='const'>BigInt</span>
 <span class='rbrace'>}</span></pre></dd>
       
     </dl>
@@ -151,9 +186,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>TODO: mapper can be different or custom.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -161,7 +194,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#detect_changes-class_method" title="detect_changes (class method)">.<strong>detect_changes</strong>(models)  &#x21d2; Object </a>
+      <a href="#allowed_types-class_method" title="allowed_types (class method)">.<strong>allowed_types</strong>  &#x21d2; Object </a>
     
 
     
@@ -183,7 +216,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#generate_migrations-class_method" title="generate_migrations (class method)">.<strong>generate_migrations</strong>(changes, write: false)  &#x21d2; Object </a>
+      <a href="#detect_changes-class_method" title="detect_changes (class method)">.<strong>detect_changes</strong>(model)  &#x21d2; Object </a>
     
 
     
@@ -205,7 +238,51 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#store_field_snapshot-class_method" title="store_field_snapshot (class method)">.<strong>store_field_snapshot</strong>(models, write: false)  &#x21d2; Object </a>
+      <a href="#generate_migration-class_method" title="generate_migration (class method)">.<strong>generate_migration</strong>(model, model_changes, index: 0, write: false)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#valid_type%3F-class_method" title="valid_type? (class method)">.<strong>valid_type?</strong>(type)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#write_migration-class_method" title="write_migration (class method)">.<strong>write_migration</strong>(migration_code, migration_class_name, timestamp)  &#x21d2; Object </a>
     
 
     
@@ -242,36 +319,25 @@
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>TODO: mapper can be different or custom</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51</pre>
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_active_record_models'>active_record_models</span>
   <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_application'>application</span><span class='period'>.</span><span class='id identifier rubyid_eager_load!'>eager_load!</span> <span class='comment'># Ensure all models are loaded
@@ -289,9 +355,9 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="detect_changes-class_method">
+  <h3 class="signature " id="allowed_types-class_method">
   
-    .<strong>detect_changes</strong>(models)  &#x21d2; <tt>Object</tt> 
+    .<strong>allowed_types</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -303,15 +369,38 @@
       <pre class="lines">
 
 
-74
-75
-76
-77
-78
-79
-80
-81
-82
+62
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 62</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_allowed_types'>allowed_types</span>
+  <span class='comment'># TODO: this may depend on the current database adapter or mapper
+</span>  <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span><span class='period'>.</span><span class='id identifier rubyid_connection'>connection</span><span class='period'>.</span><span class='id identifier rubyid_native_database_types'>native_database_types</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="detect_changes-class_method">
+  
+    .<strong>detect_changes</strong>(model)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
 83
 84
 85
@@ -356,85 +445,8 @@
 124
 125
 126
-127</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 74</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_detect_changes'>detect_changes</span><span class='lparen'>(</span><span class='id identifier rubyid_models'>models</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_changes'>changes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-
-  <span class='comment'># Load the snapshot
-</span>  <span class='id identifier rubyid_snapshot_path'>snapshot_path</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>db</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>field_snapshot.json</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_snapshot'>snapshot</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_snapshot_path'>snapshot_path</span><span class='rparen'>)</span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_snapshot_metadata'>snapshot_metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_snapshot'>snapshot</span><span class='lbracket'>[</span><span class='symbol'>:__metadata__</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>snapshot_metadata: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_snapshot_metadata'>snapshot_metadata</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_snapshot'>snapshot</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:__metadata__</span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_models'>models</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_model'>model</span><span class='op'>|</span>
-    <span class='id identifier rubyid_model_name'>model_name</span> <span class='op'>=</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
-    <span class='id identifier rubyid_declared_fields'>declared_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_declared_fields'>declared_fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span> <span class='comment'># f.type.to_s
-</span>    <span class='id identifier rubyid_previous_fields'>previous_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_snapshot'>snapshot</span><span class='lbracket'>[</span><span class='id identifier rubyid_model_name'>model_name</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-
-    <span class='comment'># Detect changes
-</span>    <span class='id identifier rubyid_model_changes'>model_changes</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-      <span class='label'>added:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>removed:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>renamed:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>type_changed:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-    <span class='rbrace'>}</span>
-
-    <span class='id identifier rubyid_declared_fields'>declared_fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='op'>|</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_previous_fields'>previous_fields</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
-        <span class='kw'>if</span> <span class='id identifier rubyid_previous_fields'>previous_fields</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
-          <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:type_changed</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>name:</span><span class='comma'>,</span> <span class='label'>from:</span> <span class='id identifier rubyid_previous_fields'>previous_fields</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_type'>type</span> <span class='rbrace'>}</span>
-        <span class='kw'>end</span>
-      <span class='kw'>else</span>
-        <span class='comment'># Check for renames
-</span>        <span class='id identifier rubyid_renamed_from'>renamed_from</span> <span class='op'>=</span> <span class='id identifier rubyid_previous_fields'>previous_fields</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_prev_name'>prev_name</span><span class='op'>|</span>
-          <span class='id identifier rubyid_previous_fields'>previous_fields</span><span class='lbracket'>[</span><span class='id identifier rubyid_prev_name'>prev_name</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_declared_fields'>declared_fields</span><span class='lbracket'>[</span><span class='id identifier rubyid_prev_name'>prev_name</span><span class='rbracket'>]</span>
-        <span class='kw'>end</span>
-        <span class='kw'>if</span> <span class='id identifier rubyid_renamed_from'>renamed_from</span>
-          <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:renamed</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>from:</span> <span class='id identifier rubyid_renamed_from'>renamed_from</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_name'>name</span> <span class='rbrace'>}</span>
-        <span class='kw'>else</span>
-          <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:added</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>name:</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='rbrace'>}</span>
-        <span class='kw'>end</span>
-      <span class='kw'>end</span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_previous_fields'>previous_fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='op'>|</span>
-      <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:removed</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='lbrace'>{</span> <span class='label'>name:</span> <span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_declared_fields'>declared_fields</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_changes'>changes</span><span class='lbracket'>[</span><span class='id identifier rubyid_model_name'>model_name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_model_changes'>model_changes</span> <span class='kw'>unless</span> <span class='id identifier rubyid_model_changes'>model_changes</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:empty?</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-
-  <span class='comment'># Update the snapshot
-</span>  <span class='comment'># store_field_snapshot(models)
-</span>
-  <span class='id identifier rubyid_changes'>changes</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="generate_migrations-class_method">
-  
-    .<strong>generate_migrations</strong>(changes, write: false)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
+127
+128
 129
 130
 131
@@ -450,8 +462,93 @@
 141
 142
 143
-144
-145
+144</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 83</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_detect_changes'>detect_changes</span><span class='lparen'>(</span><span class='id identifier rubyid_model'>model</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_previous_fields'>previous_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_attribute_types'>attribute_types</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
+  <span class='id identifier rubyid_declared_fields'>declared_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_declared_fields'>declared_fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+    <span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='lbrace'>{</span>
+      <span class='label'>name:</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span>
+      <span class='label'>options:</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span>
+    <span class='rbrace'>}</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
+
+  <span class='comment'># puts &quot;Log: previous_fields: #{previous_fields}&quot;
+</span>  <span class='comment'># puts &quot;Log: declared_fields #{declared_fields}}&quot;
+</span>
+  <span class='id identifier rubyid_model_changes'>model_changes</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='label'>added:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>removed:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>renamed:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>type_changed:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>potential_renames:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='rbrace'>}</span>
+
+  <span class='comment'># Detect added and type-changed fields
+</span>  <span class='id identifier rubyid_declared_fields'>declared_fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='op'>|</span>
+    <span class='id identifier rubyid_type_name'>type_name</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_previous_fields'>previous_fields</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_previous_fields'>previous_fields</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='id identifier rubyid_type_name'>type_name</span>
+        <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:type_changed</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>name:</span><span class='comma'>,</span> <span class='label'>from:</span> <span class='id identifier rubyid_previous_fields'>previous_fields</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_type'>type</span> <span class='rbrace'>}</span>
+      <span class='kw'>end</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:added</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>name:</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Detect removed fields
+</span>  <span class='id identifier rubyid_removed_fields'>removed_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_previous_fields'>previous_fields</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>-</span> <span class='id identifier rubyid_declared_fields'>declared_fields</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
+  <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:removed</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_removed_fields'>removed_fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span> <span class='lbrace'>{</span> <span class='label'>name:</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='id identifier rubyid_previous_fields'>previous_fields</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
+
+  <span class='comment'># Detect potential renames
+</span>  <span class='id identifier rubyid_potential_renames'>potential_renames</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:removed</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_removed_field'>removed_field</span><span class='op'>|</span>
+    <span class='comment'># puts &quot;Log: removed_field: #{removed_field}&quot;
+</span>    <span class='id identifier rubyid_added_field'>added_field</span> <span class='op'>=</span> <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:added</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_removed_field'>removed_field</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_potential_renames'>potential_renames</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>from:</span> <span class='id identifier rubyid_removed_field'>removed_field</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_added_field'>added_field</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_added_field'>added_field</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># puts &quot;Log: potential_renames: #{potential_renames}&quot;
+</span>
+  <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:potential_renames</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_potential_renames'>potential_renames</span>
+
+  <span class='comment'># Filter out incorrect renames (one-to-one mapping)
+</span>  <span class='id identifier rubyid_potential_renames'>potential_renames</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rename'>rename</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:added</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_rename'>rename</span><span class='lbracket'>[</span><span class='symbol'>:to</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='rbrace'>}</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>&amp;&amp;</span>
+                <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:removed</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_rename'>rename</span><span class='lbracket'>[</span><span class='symbol'>:from</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='rbrace'>}</span> <span class='op'>==</span> <span class='int'>1</span>
+
+    <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:renamed</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_rename'>rename</span>
+    <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:added</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_reject!'>reject!</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_rename'>rename</span><span class='lbracket'>[</span><span class='symbol'>:to</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:removed</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_reject!'>reject!</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_rename'>rename</span><span class='lbracket'>[</span><span class='symbol'>:from</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_model_changes'>model_changes</span> <span class='kw'>unless</span> <span class='id identifier rubyid_model_changes'>model_changes</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:empty?</span><span class='rparen'>)</span>
+
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_migration-class_method">
+  
+    .<strong>generate_migration</strong>(model, model_changes, index: 0, write: false)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
 146
 147
 148
@@ -485,61 +582,64 @@
 176
 177
 178
-179</pre>
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 146</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_generate_migrations'>generate_migrations</span><span class='lparen'>(</span><span class='id identifier rubyid_changes'>changes</span><span class='comma'>,</span> <span class='label'>write:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\nMigrations code:\n\n</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_migration'>generate_migration</span><span class='lparen'>(</span><span class='id identifier rubyid_model'>model</span><span class='comma'>,</span> <span class='id identifier rubyid_model_changes'>model_changes</span><span class='comma'>,</span> <span class='label'>index:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>write:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_model_name'>model_name</span> <span class='op'>=</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+  <span class='id identifier rubyid_timestamp'>timestamp</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%Y%m%d%H%M%S</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>+</span> <span class='id identifier rubyid_index'>index</span>
+  <span class='id identifier rubyid_migration_class_name'>migration_class_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_model_name'>model_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>Migration</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='id identifier rubyid_index'>index</span> <span class='op'>=</span> <span class='int'>0</span>
-  <span class='id identifier rubyid_changes'>changes</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_model_name'>model_name</span><span class='comma'>,</span> <span class='id identifier rubyid_model_changes'>model_changes</span><span class='op'>|</span>
-    <span class='id identifier rubyid_migration_class_name'>migration_class_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_model_name'>model_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>Migration</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>class </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_migration_class_name'>migration_class_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> &lt; ActiveRecord::Migration[</span><span class='embexpr_beg'>#{</span><span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Migration</span><span class='period'>.</span><span class='id identifier rubyid_current_version'>current_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>]</span><span class='tstring_end'>&quot;</span></span>
 
-    <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>class </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_migration_class_name'>migration_class_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> &lt; ActiveRecord::Migration[</span><span class='embexpr_beg'>#{</span><span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Migration</span><span class='period'>.</span><span class='id identifier rubyid_current_version'>current_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>]</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>  def change</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>  def change</span><span class='tstring_end'>&#39;</span></span>
 
-    <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:added</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_change'>change</span><span class='op'>|</span>
-      <span class='id identifier rubyid_field_type'>field_type</span> <span class='op'>=</span> <span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span>
-      <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_field_type'>field_type</span>
-      <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_field_type'>field_type</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span>
-      <span class='id identifier rubyid_field_type_for_db'>field_type_for_db</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#GQL_TO_RAILS_TYPE_MAP-constant" title="FieldEnforcement::Utils::GQL_TO_RAILS_TYPE_MAP (constant)">GQL_TO_RAILS_TYPE_MAP</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_field_type'>field_type</span><span class='rbracket'>]</span>
-      <span class='id identifier rubyid_puts'>puts</span> <span class='const'><span class='object_link'><a href="#GQL_TO_RAILS_TYPE_MAP-constant" title="FieldEnforcement::Utils::GQL_TO_RAILS_TYPE_MAP (constant)">GQL_TO_RAILS_TYPE_MAP</a></span></span>
-      <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>    add_column :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field_type_for_db'>field_type_for_db</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:removed</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_change'>change</span><span class='op'>|</span>
-      <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>    remove_column :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:renamed</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_change'>change</span><span class='op'>|</span>
-      <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>    rename_column :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:from</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:to</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_model_changes'>model_changes</span><span class='lbracket'>[</span><span class='symbol'>:type_changed</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_change'>change</span><span class='op'>|</span>
-      <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>    change_column :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:to</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>  end</span><span class='tstring_end'>&#39;</span></span>
-    <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>end</span><span class='tstring_end'>&#39;</span></span>
-
-    <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_migration_code'>migration_code</span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
-
-    <span class='id identifier rubyid_migration_filename'>migration_filename</span> <span class='op'>=</span> <span class='kw'>nil</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_write'>write</span> <span class='op'>==</span> <span class='kw'>true</span>
-      <span class='id identifier rubyid_migration_filename'>migration_filename</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%Y%m%d%H%M%S</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>+</span> <span class='id identifier rubyid_index'>index</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_migration_class_name'>migration_class_name</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='embexpr_end'>}</span><span class='tstring_content'>.rb</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_migration_path'>migration_path</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>db</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>migrate</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_migration_filename'>migration_filename</span><span class='rparen'>)</span>
-      <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_migration_path'>migration_path</span><span class='comma'>,</span> <span class='id identifier rubyid_migration_code'>migration_code</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Migration saved at </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_migration_path'>migration_path</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_index'>index</span> <span class='op'>+=</span> <span class='int'>1</span>
-
-    <span class='lbracket'>[</span><span class='id identifier rubyid_migration_code'>migration_code</span><span class='comma'>,</span> <span class='id identifier rubyid_migration_filename'>migration_filename</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_model_changes'>model_changes</span><span class='op'>&amp;.</span><span class='id identifier rubyid_dig'>dig</span><span class='lparen'>(</span><span class='symbol'>:added</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_change'>change</span><span class='op'>|</span>
+    <span class='id identifier rubyid_field_type'>field_type</span> <span class='op'>=</span> <span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_field_type_for_db'>field_type_for_db</span> <span class='op'>=</span> <span class='id identifier rubyid_field_type'>field_type</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span>
+    <span class='comment'># field_type_for_db = GQL_TO_RAILS_TYPE_MAP[field_type.constantize]
+</span>    <span class='comment'># field_type_for_gql = RAILS_TO_GQL_TYPE_MAP[field_type.constantize]
+</span>    <span class='comment'># TODO: ID should be string / integer? custom mapper
+</span>    <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>    add_column :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field_type_for_db'>field_type_for_db</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_model_changes'>model_changes</span><span class='op'>&amp;.</span><span class='id identifier rubyid_dig'>dig</span><span class='lparen'>(</span><span class='symbol'>:removed</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_change'>change</span><span class='op'>|</span>
+    <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>    remove_column :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_model_changes'>model_changes</span><span class='op'>&amp;.</span><span class='id identifier rubyid_dig'>dig</span><span class='lparen'>(</span><span class='symbol'>:renamed</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_change'>change</span><span class='op'>|</span>
+    <span class='id identifier rubyid_change_to'>change_to</span> <span class='op'>=</span> <span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:to</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>    rename_column :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:from</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_change_to'>change_to</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_model_changes'>model_changes</span><span class='op'>&amp;.</span><span class='id identifier rubyid_dig'>dig</span><span class='lparen'>(</span><span class='symbol'>:type_changed</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_change'>change</span><span class='op'>|</span>
+    <span class='id identifier rubyid_change_to'>change_to</span> <span class='op'>=</span> <span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:to</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>    change_column :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_tableize'>tableize</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_change'>change</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>, :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_change_to'>change_to</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>  end</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>end</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_migration_code'>migration_code</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+
+  <span class='comment'># TODO: separate write migration to a method
+</span>  <span class='comment'># migration_filename = nil
+</span>  <span class='id identifier rubyid_write_migration'>write_migration</span><span class='lparen'>(</span><span class='id identifier rubyid_migration_code'>migration_code</span><span class='comma'>,</span> <span class='id identifier rubyid_migration_class_name'>migration_class_name</span><span class='comma'>,</span> <span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_write'>write</span> <span class='op'>==</span> <span class='kw'>true</span>
+
+  <span class='comment'># index += 1
+</span>  <span class='id identifier rubyid_migration_code'>migration_code</span><span class='op'>&amp;.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -547,9 +647,63 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="store_field_snapshot-class_method">
+  <h3 class="signature " id="valid_type?-class_method">
   
-    .<strong>store_field_snapshot</strong>(models, write: false)  &#x21d2; <tt>Object</tt> 
+    .<strong>valid_type?</strong>(type)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+67
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 67</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_valid_type?'>valid_type?</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='comment'># TODO: this may depend on the current database adapter or mapper
+</span>  <span class='id identifier rubyid_allowed_types'>allowed_types</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="write_migration-class_method">
+  
+    .<strong>write_migration</strong>(migration_code, migration_class_name, timestamp)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -561,49 +715,23 @@
       <pre class="lines">
 
 
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72</pre>
+191
+192
+193
+194
+195
+196
+197</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 191</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_store_field_snapshot'>store_field_snapshot</span><span class='lparen'>(</span><span class='id identifier rubyid_models'>models</span><span class='comma'>,</span> <span class='label'>write:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_snapshot'>snapshot</span> <span class='op'>=</span> <span class='id identifier rubyid_models'>models</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_model'>model</span><span class='op'>|</span>
-    <span class='lbracket'>[</span><span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_declared_fields'>declared_fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='rbracket'>]</span>
-  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
-
-  <span class='id identifier rubyid_snapshot'>snapshot</span><span class='lbracket'>[</span><span class='symbol'>:__metadata__</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-    <span class='label'>updated_at:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%Y%m%d%H%M%S</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-  <span class='rbrace'>}</span>
-
-  <span class='id identifier rubyid_snapshot_in_json'>snapshot_in_json</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_pretty_generate'>pretty_generate</span><span class='lparen'>(</span><span class='id identifier rubyid_snapshot'>snapshot</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_snapshot_in_json'>snapshot_in_json</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_write'>write</span> <span class='op'>==</span> <span class='kw'>true</span>
-    <span class='id identifier rubyid_snapshot_path'>snapshot_path</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>db</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>field_snapshot.json</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-    <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_snapshot_path'>snapshot_path</span><span class='comma'>,</span> <span class='id identifier rubyid_snapshot_in_json'>snapshot_in_json</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Field snapshot file udpated </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_snapshot_path'>snapshot_path</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_snapshot_in_json'>snapshot_in_json</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_write_migration'>write_migration</span><span class='lparen'>(</span><span class='id identifier rubyid_migration_code'>migration_code</span><span class='comma'>,</span> <span class='id identifier rubyid_migration_class_name'>migration_class_name</span><span class='comma'>,</span> <span class='id identifier rubyid_timestamp'>timestamp</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_migration_filename'>migration_filename</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_timestamp'>timestamp</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_migration_class_name'>migration_class_name</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='embexpr_end'>}</span><span class='tstring_content'>.rb</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_migration_path'>migration_path</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>db</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>migrate</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_migration_filename'>migration_filename</span><span class='rparen'>)</span>
+  <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_migration_path'>migration_path</span><span class='comma'>,</span> <span class='id identifier rubyid_migration_code'>migration_code</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="#LOGGER-constant" title="FieldEnforcement::Utils::LOGGER (constant)">LOGGER</a></span></span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Migration saved at </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_migration_path'>migration_path</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='lbrace'>{</span> <span class='label'>migration_filename:</span><span class='comma'>,</span> <span class='label'>migration_path:</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -615,7 +743,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Aug 23 02:03:58 2023 by
+  Generated on Sat Aug 26 02:05:58 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>

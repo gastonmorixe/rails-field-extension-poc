@@ -2,13 +2,13 @@
 
 # User model
 class User < ApplicationRecord
-  field :id, ID
-  field :name, String
-  field :age, Int
-  field :zipcode, Int
-  field :notes, String
-  field :created_at, ISO8601DateTime
-  field :updated_at, ISO8601DateTime
+  field :id, :integer
+  field :name, :string
+  field :age, :integer
+  field :zipcode, :integer
+  field :notes, :string
+  field :created_at, :datetime
+  field :updated_at, :datetime
 
   has_many :employments
   has_many :companies, through: :employments

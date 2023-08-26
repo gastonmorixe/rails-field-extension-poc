@@ -97,6 +97,10 @@ GEM
     builder (3.2.4)
     choice (0.2.0)
     concurrent-ruby (1.2.2)
+    countries (5.6.0)
+      unaccent (~> 0.3)
+    country_select (8.0.2)
+      countries (~> 5.0)
     crass (1.0.6)
     date (3.3.3)
     debug (1.8.0)
@@ -243,6 +247,7 @@ GEM
     timeout (0.4.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unaccent (0.4.0)
     unicode-display_width (2.4.2)
     web-console (4.2.0)
       actionview (>= 6.0.0)
@@ -262,6 +267,7 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
+  country_select (~> 8.0)
   debug
   error_highlight (>= 0.4.0)
   formtastic (~> 4.0)

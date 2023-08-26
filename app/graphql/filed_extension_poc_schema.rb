@@ -1,6 +1,6 @@
 class FiledExtensionPocSchema < GraphQL::Schema
-  mutation(Types::MutationType)
-  query(Types::QueryType)
+  mutation(Types::MutationType) unless defined?(@mutation_object)
+  query(Types::QueryType) unless defined?(@query_object)
 
   # For batch-loading (see https://graphql-ruby.org/dataloader/overview.html)
   use GraphQL::Dataloader
