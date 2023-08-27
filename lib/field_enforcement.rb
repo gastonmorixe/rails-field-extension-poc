@@ -17,6 +17,7 @@ module FieldEnforcement
 
   def self.included(base)
     # base.extend(ClassMethods)
+    # todo: raise if class methods not found
     base.after_initialize do
       self.class.enforce_declared_fields
     end
