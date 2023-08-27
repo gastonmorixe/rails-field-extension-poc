@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Employment is a relationship between User and Company
 class Employment < ApplicationRecord
   field :id, :integer

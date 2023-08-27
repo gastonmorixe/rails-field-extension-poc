@@ -5,6 +5,17 @@
     "esbuild": "^0.19.1"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets"
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
+    "format:ruby": "prettier --plugin=@prettier/plugin-ruby --write '**/*'"
+  },
+  "todoDevDependencies": {
+    "@prettier/plugin-ruby": "^4.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-prettier": "^0.0.0-empty",
+    "prettier": "^3.0.2",
+    "typescript": "^5.2.2"
   }
 }

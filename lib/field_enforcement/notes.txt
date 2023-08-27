@@ -1,0 +1,272 @@
+# https://github.com/lsegal/yard/blob/main/docs/WhatsNew.md#new-parse-directive-to-parse-ruby-code   # @!parse extend FieldEnforcement::ClassMethods
+  # Yard comment on @!parse https://github.com/lsegal/yard/issues/858#issuecomment-210697356
+  # https://rubydoc.info/gems/yard/YARD/Tags/ParseDirective
+  # @!!!parse extend FieldEnforcement::ClassMethods
+
+  # irb(main):005:0> ls GraphQL::Types
+# constants: BigInt  Boolean  Float  ID  ISO8601Date  ISO8601DateTime  Int  JSON  Relay  String
+# => nil
+
+# TODOs:
+# TODO: mapper or dry-type / dry-struct
+# https://github.com/rmosolgo/graphql-ruby/blob/master/lib/graphql/schema/member/build_type.rb#L12
+# https://github.com/rmosolgo/graphql-ruby/blob/master/lib/graphql/types/iso_8601_date_time.rb
+# https://github.com/rmosolgo/graphql-ruby/blob/master/spec/integration/rails/generators/graphql/object_generator_spec.rb#L6
+# https://github.com/rmosolgo/graphql-ruby/blob/master/lib/graphql/schema/field.rb#L589
+
+# irb(main):010:0> ActiveRecord::Base.connection.type_to_sql :string
+# "varchar"
+# irb(main):011:0> ActiveRecord::Base.connection.type_to_sql :bigint
+# "bigint"
+# irb(main):012:0> ActiveRecord::Base.connection.type_to_sql :int
+# "int"
+
+# irb(main):010:0> User.connection.schema_cache.instance_variable_get(:@columns_hash)
+# {}
+
+# irb(main):011:0> User.connection.schema_cache.columns_hash(User.table_name)
+# {
+#             "id" => #<ActiveRecord::ConnectionAdapters::Column:0x0000000120b3e158 @name="id", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000120b3ff58 @sql_type="INTEGER", @type=:integer, @limit=nil, @precision=nil, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#           "name" => #<ActiveRecord::ConnectionAdapters::Column:0x0000000120b3dfc8 @name="name", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000120b3e0b8 @sql_type="varchar", @type=:string, @limit=nil, @precision=nil, @scale=nil>, @null=true, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#     "created_at" => #<ActiveRecord::ConnectionAdapters::Column:0x0000000120b3de88 @name="created_at", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000120b3df78 @sql_type="datetime(6)", @type=:datetime, @limit=nil, @precision=6, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#     "updated_at" => #<ActiveRecord::ConnectionAdapters::Column:0x0000000120b3dd48 @name="updated_at", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000120b3df78 @sql_type="datetime(6)", @type=:datetime, @limit=nil, @precision=6, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>
+# }
+
+# irb(main):012:0> User.connection.schema_cache.instance_variable_get(:@columns_hash)
+# {
+#     "users" => {
+#                 "id" => #<ActiveRecord::ConnectionAdapters::Column:0x0000000120b3e158 @name="id", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000120b3ff58 @sql_type="INTEGER", @type=:integer, @limit=nil, @precision=nil, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#               "name" => #<ActiveRecord::ConnectionAdapters::Column:0x0000000120b3dfc8 @name="name", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000120b3e0b8 @sql_type="varchar", @type=:string, @limit=nil, @precision=nil, @scale=nil>, @null=true, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#         "created_at" => #<ActiveRecord::ConnectionAdapters::Column:0x0000000120b3de88 @name="created_at", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000120b3df78 @sql_type="datetime(6)", @type=:datetime, @limit=nil, @precision=6, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#         "updated_at" => #<ActiveRecord::ConnectionAdapters::Column:0x0000000120b3dd48 @name="updated_at", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000120b3df78 @sql_type="datetime(6)", @type=:datetime, @limit=nil, @precision=6, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>
+#     }
+# }
+
+# irb(main):015:0> User.attribute_types
+# {
+#             "id" => #<ActiveRecord::ConnectionAdapters::SQLite3Adapter::SQLite3Integer:0x0000000120b3ffa8 @precision=nil, @scale=nil, @limit=nil, @range=-9223372036854775808...9223372036854775808>,
+#           "name" => #<ActiveModel::Type::String:0x0000000120b3e108 @true="t", @false="f", @precision=nil, @scale=nil, @limit=nil>,
+#     "created_at" => #<ActiveRecord::Type::DateTime:0x0000000117b5ef88 @precision=6, @scale=nil, @limit=nil>,
+#     "updated_at" => #<ActiveRecord::Type::DateTime:0x0000000117b5ef88 @precision=6, @scale=nil, @limit=nil>
+# }
+
+# irb(main):028:0> User.connection.schema_cache.instance_variable_get(:@columns_hash)
+# {}
+# irb(main):029:0> User.connection.schema_cache.columns(User.table_name)
+# [
+#     [0] #<ActiveRecord::ConnectionAdapters::Column:0x0000000120b3e158 @name="id", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000120b3ff58 @sql_type="INTEGER", @type=:integer, @limit=nil, @precision=nil, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#     [1] #<ActiveRecord::ConnectionAdapters::Column:0x0000000120b3dfc8 @name="name", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000120b3e0b8 @sql_type="varchar", @type=:string, @limit=nil, @precision=nil, @scale=nil>, @null=true, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#     [2] #<ActiveRecord::ConnectionAdapters::Column:0x0000000120b3de88 @name="created_at", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000120b3df78 @sql_type="datetime(6)", @type=:datetime, @limit=nil, @precision=6, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#     [3] #<ActiveRecord::ConnectionAdapters::Column:0x0000000120b3dd48 @name="updated_at", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000120b3df78 @sql_type="datetime(6)", @type=:datetime, @limit=nil, @precision=6, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>
+# ]
+# irb(main):030:0> User.connection.schema_cache.instance_variable_get(:@columns_hash)
+# {}
+
+# irb(main):035:0> ActiveRecord::Base.connection == User.connection
+# true
+
+# irb(main):010:0> ActiveRecord::Base.connection.columns(User.table_name)
+# [
+#     [0] #<ActiveRecord::ConnectionAdapters::Column:0x0000000114a10ff8 @name="id", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000114a12df8 @sql_type="INTEGER", @type=:integer, @limit=nil, @precision=nil, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#     [1] #<ActiveRecord::ConnectionAdapters::Column:0x0000000114a10e68 @name="name", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000114a10f58 @sql_type="varchar", @type=:string, @limit=nil, @precision=nil, @scale=nil>, @null=true, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#     [2] #<ActiveRecord::ConnectionAdapters::Column:0x0000000114a10d28 @name="created_at", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000114a10e18 @sql_type="datetime(6)", @type=:datetime, @limit=nil, @precision=6, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#     [3] #<ActiveRecord::ConnectionAdapters::Column:0x0000000114a10be8 @name="updated_at", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000114a10e18 @sql_type="datetime(6)", @type=:datetime, @limit=nil, @precision=6, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>
+# ]
+# irb(main):011:0> ActiveRecord::Base.connection.schema_cache.columns(User.table_name)
+# [
+#     [0] #<ActiveRecord::ConnectionAdapters::Column:0x0000000114a10ff8 @name="id", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000114a12df8 @sql_type="INTEGER", @type=:integer, @limit=nil, @precision=nil, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#     [1] #<ActiveRecord::ConnectionAdapters::Column:0x0000000114a10e68 @name="name", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000114a10f58 @sql_type="varchar", @type=:string, @limit=nil, @precision=nil, @scale=nil>, @null=true, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#     [2] #<ActiveRecord::ConnectionAdapters::Column:0x0000000114a10d28 @name="created_at", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000114a10e18 @sql_type="datetime(6)", @type=:datetime, @limit=nil, @precision=6, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>,
+#     [3] #<ActiveRecord::ConnectionAdapters::Column:0x0000000114a10be8 @name="updated_at", @sql_type_metadata=#<ActiveRecord::ConnectionAdapters::SqlTypeMetadata:0x0000000114a10e18 @sql_type="datetime(6)", @type=:datetime, @limit=nil, @precision=6, @scale=nil>, @null=false, @default=nil, @default_function=nil, @collation=nil, @comment=nil>
+# ]
+
+# activerecord-7.0.7/lib/active_record/schema_dumper.rb
+# irb(main):002:0> ActiveRecord::SchemaDumper.dump
+#   ActiveRecord::SchemaMigration Pluck (0.1ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
+#
+# It's strongly recommended that you check this file into your version control system.
+
+# ActiveRecord::Schema[7.0].define(version: 2023_08_14_003247) do
+#   create_table "companies", force: :cascade do |t|
+#     t.string "name"
+#     t.datetime "created_at", null: false
+#     t.datetime "updated_at", null: false
+#   end
+
+#   create_table "employments", force: :cascade do |t|
+#     t.integer "company_id", null: false
+#     t.integer "user_id", null: false
+#     t.datetime "created_at", null: false
+#     t.datetime "updated_at", null: false
+#     t.index ["company_id"], name: "index_employments_on_company_id"
+#     t.index ["user_id"], name: "index_employments_on_user_id"
+#   end
+
+#   create_table "users", force: :cascade do |t|
+#     t.string "name"
+#     t.datetime "created_at", null: false
+#     t.datetime "updated_at", null: false
+#     t.string "extra_col"
+#   end
+
+#   add_foreign_key "employments", "companies"
+#   add_foreign_key "employments", "users"
+# end
+
+# irb(main):003:0> ActiveRecord::Base.connection.tables
+# [
+#     [0] "schema_migrations",
+#     [1] "ar_internal_metadata",
+#     [2] "companies",
+#     [3] "employments",
+#     [4] "users"
+# ]
+
+# irb(main):025:0> User.attribute_types.first.last.class.ancestors
+# [
+#     [ 0] ActiveRecord::ConnectionAdapters::SQLite3Adapter::SQLite3Integer < ActiveModel::Type::Integer,
+#     [ 1] ActiveModel::Type::Integer < ActiveModel::Type::Value,
+#     [ 2] ActiveModel::Type::Helpers::Numeric,
+#     [ 3] ActiveModel::Type::Value < Object, # ! This is key ---> ActiveModel::Type::Value has a #type method
+#     [ 4] ActiveSupport::Dependencies::RequireDependency,
+#     [ 5] ActiveSupport::ToJsonWithActiveSupportEncoder,
+#     [ 6] Object < BasicObject,
+#     [ 7] PP::ObjectMixin,
+#     [ 8] JSON::Ext::Generator::GeneratorMethods::Object,
+#     [ 9] ActiveSupport::Tryable,
+#     [10] DEBUGGER__::TrapInterceptor,
+#     [11] Kernel,
+#     [12] BasicObject
+# ]
+# irb(main):026:0> pp User.attribute_types.first.last
+# #<ActiveRecord::ConnectionAdapters::SQLite3Adapter::SQLite3Integer:0x0000000106ef63c8
+#  @limit=nil,
+#  @precision=nil,
+#  @range=-9223372036854775808...9223372036854775808,
+#  @scale=nil>
+# #<ActiveRecord::ConnectionAdapters::SQLite3Adapter::SQLite3Integer:0x0000000106ef63c8 @precision=nil, @scale=nil, @limit=nil, @range=-9223372036854775808...9223372036854775808>
+# irb(main):027:0> pp User.attribute_types.first.last.type
+# :integer
+# :integer
+# irb(main):028:0>
+
+# irb(main):029:0> User.attribute_types
+# {
+#             "id" => #<ActiveRecord::ConnectionAdapters::SQLite3Adapter::SQLite3Integer:0x0000000106ef63c8 @precision=nil, @scale=nil, @limit=nil, @range=-9223372036854775808...9223372036854775808>,
+#           "name" => #<ActiveModel::Type::String:0x0000000106ef4528 @true="t", @false="f", @precision=nil, @scale=nil, @limit=nil>,
+#     "created_at" => #<ActiveRecord::Type::DateTime:0x00000001066b5d08 @precision=6, @scale=nil, @limit=nil>,
+#     "updated_at" => #<ActiveRecord::Type::DateTime:0x00000001066b5d08 @precision=6, @scale=nil, @limit=nil>,
+#      "extra_col" => #<ActiveModel::Type::String:0x0000000106ef4528 @true="t", @false="f", @precision=nil, @scale=nil, @limit=nil>
+# }
+
+# irb(main):028:0> User.attribute_types.map{ |k, v| [k, v.type] }.to_h
+# {
+#             "id" => :integer,
+#           "name" => :string,
+#     "created_at" => :datetime,
+#     "updated_at" => :datetime,
+#      "extra_col" => :string
+# }
+# irb(main):029:0>
+
+# ActiveRecord::Type.registry.instance_variable_get(:@registrations).map{ |r| r.instance_variable_get(:@name) }
+# [
+#     [ 0] :big_integer,
+#     [ 1] :binary,
+#     [ 2] :boolean,
+#     [ 3] :date,
+#     [ 4] :datetime,
+#     [ 5] :decimal,
+#     [ 6] :float,
+#     [ 7] :integer,
+#     [ 8] :immutable_string,
+#     [ 9] :json,
+#     [10] :string,
+#     [11] :text,
+#     [12] :time,
+#     [13] :integer
+# ]
+
+# irb(main):055:0> ActiveRecord::Base.connection.type_to_sql("string")
+# "varchar"
+# irb(main):056:0> ActiveRecord::Base.connection.type_to_sql(:string)
+# "varchar"
+# irb(main):057:0> ActiveRecord::Base.connection.type_to_sql(:big_integer)
+# "big_integer"
+# irb(main):058:0> ActiveRecord::Base.connection.type_to_sql(:bidjfid)
+# "bidjfid"
+# irb(main):059:0> ActiveRecord::Base.connection.type_to_sql(:binary)
+# "blob"
+# irb(main):060:0> ActiveRecord::Base.connection.type_to_sql(:bimmutable_string)
+# "bimmutable_string"
+# irb(main):061:0> ActiveRecord::Base.connection.type_to_sql(:immutable_string)
+# "immutable_string"
+# irb(main):062:0> ActiveRecord::Base.connection.type_to_sql(:json)
+# "json"
+# irb(main):063:0> ActiveRecord::Base.connection.type_to_sql(:text)
+# "text"
+# irb(main):064:0> ActiveRecord::Base.connection.type_to_sql(:time)
+# "time"
+# irb(main):065:0> ActiveRecord::Base.connection.type_to_sql(:integer)
+# "integer"
+# irb(main):066:0> ActiveRecord::Base.connection.type_to_sql(:date)
+# "date"
+# irb(main):067:0> ActiveRecord::Base.connection.type_to_sql(:datetime)
+# "datetime"
+# irb(main):068:0> ActiveRecord::Base.connection.type_to_sql(:boolean)
+# "boolean"
+# irb(main):069:0> ActiveRecord::Base.connection.type_to_sql("boolean")
+# "boolean"
+# irb(main):070:0> ActiveRecord::Base.connection.type_to_sql("float")
+# "float"
+# irb(main):071:0> ActiveRecord::Base.connection.type_to_sql(:float)
+# "float"
+# irb(main):072:0> ActiveRecord::Base.connection.type_to_sql(:string)
+# "varchar"
+
+# irb(main):073:0> ActiveRecord::Base.connection.native_database_types
+# {
+#     :primary_key => "integer PRIMARY KEY AUTOINCREMENT NOT NULL",
+#          :string => {
+#         :name => "varchar"
+#     },
+#            :text => {
+#         :name => "text"
+#     },
+#         :integer => {
+#         :name => "integer"
+#     },
+#           :float => {
+#         :name => "float"
+#     },
+#         :decimal => {
+#         :name => "decimal"
+#     },
+#        :datetime => {
+#         :name => "datetime"
+#     },
+#            :time => {
+#         :name => "time"
+#     },
+#            :date => {
+#         :name => "date"
+#     },
+#          :binary => {
+#         :name => "blob"
+#     },
+#         :boolean => {
+#         :name => "boolean"
+#     },
+#            :json => {
+#         :name => "json"
+#     }
+# }

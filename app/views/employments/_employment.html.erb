@@ -1,12 +1,6 @@
 <div id="<%= dom_id employment %>">
   <p>
-    <strong>Company:</strong>
-    <%= employment.company_id %>
+    <strong><%= employment.user.name %></strong> (<%= employment.user_id %>) is employed
+    at <strong><%= employment.company.name %></strong> (<%= employment.company_id %>)
   </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= employment.user_id %>
-  </p>
-
 </div>

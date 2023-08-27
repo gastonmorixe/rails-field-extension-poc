@@ -190,6 +190,30 @@
 </li>
 
       
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#employment_params-instance_method" title="#employment_params (instance method)">#<strong>employment_params</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Only allow a list of trusted parameters through.</p>
+</div></span>
+  
+</li>
+
+      
         <li class="public ">
   <span class="summary_signature">
     
@@ -233,6 +257,30 @@
   
     <span class="summary_desc"><div class='inline'>
 <p>GET /employments/new.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#set_employment-instance_method" title="#set_employment (instance method)">#<strong>set_employment</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Use callbacks to share common setup or constraints between actions.</p>
 </div></span>
   
 </li>
@@ -293,10 +341,6 @@
   
   
   
-  
-  
-  
-  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -328,18 +372,18 @@
       <pre class="lines">
 
 
+21
+22
 23
 24
 25
 26
 27
 28
-29
-30
-31</pre>
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='ivar'>@employment</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Employment.html" title="Employment (class)">Employment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_employment_params'>employment_params</span><span class='rparen'>)</span>
@@ -381,17 +425,19 @@
       <pre class="lines">
 
 
+41
+42
 43
 44
-45
-46</pre>
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@employment</span><span class='period'>.</span><span class='id identifier rubyid_destroy!'>destroy!</span>
-  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_employments_url'>employments_url</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Employment was successfully destroyed.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:see_other</span>
+  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_employments_url'>employments_url</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Employment was successfully destroyed.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                               <span class='label'>status:</span> <span class='symbol'>:see_other</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -424,13 +470,52 @@
       <pre class="lines">
 
 
-19
-20</pre>
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 18</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="employment_params-instance_method">
+  
+    #<strong>employment_params</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Only allow a list of trusted parameters through.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_employment_params'>employment_params</span>
+  <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_require'>require</span><span class='lparen'>(</span><span class='symbol'>:employment</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_permit'>permit</span><span class='lparen'>(</span><span class='symbol'>:company_id</span><span class='comma'>,</span> <span class='symbol'>:user_id</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -504,15 +589,56 @@
       <pre class="lines">
 
 
+13
 14
-15
-16</pre>
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
   <span class='ivar'>@employment</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Employment.html" title="Employment (class)">Employment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_employment-instance_method">
+  
+    #<strong>set_employment</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Use callbacks to share common setup or constraints between actions.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_employment'>set_employment</span>
+  <span class='ivar'>@employment</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Employment.html" title="Employment (class)">Employment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -545,14 +671,12 @@
       <pre class="lines">
 
 
-10
-11</pre>
+10</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 10</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -584,16 +708,16 @@
       <pre class="lines">
 
 
+32
+33
 34
 35
 36
 37
-38
-39
-40</pre>
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='kw'>if</span> <span class='ivar'>@employment</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_employment_params'>employment_params</span><span class='rparen'>)</span>
@@ -612,7 +736,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Aug 26 02:05:58 2023 by
+  Generated on Sat Aug 26 21:16:49 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>

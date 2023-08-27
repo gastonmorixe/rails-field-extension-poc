@@ -1,5 +1,5 @@
 class EmploymentsController < ApplicationController
-  before_action :set_employment, only: %i[ show edit update destroy ]
+  before_action :set_employment, only: %i[show edit update destroy]
 
   # GET /employments
   def index
@@ -7,8 +7,7 @@ class EmploymentsController < ApplicationController
   end
 
   # GET /employments/1
-  def show
-  end
+  def show; end
 
   # GET /employments/new
   def new
@@ -16,8 +15,7 @@ class EmploymentsController < ApplicationController
   end
 
   # GET /employments/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /employments
   def create
@@ -42,7 +40,8 @@ class EmploymentsController < ApplicationController
   # DELETE /employments/1
   def destroy
     @employment.destroy!
-    redirect_to employments_url, notice: "Employment was successfully destroyed.", status: :see_other
+    redirect_to employments_url, notice: "Employment was successfully destroyed.",
+                                 status: :see_other
   end
 
   private

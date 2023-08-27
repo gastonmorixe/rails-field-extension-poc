@@ -1,17 +1,27 @@
 ---
 include:
 - "**/*.rb"
-- "lib/field_enforcement.rb"
+- "./lib/**/*.rb"
 exclude:
 - spec/**/*
 - test/**/*
 - vendor/**/*
 - ".bundle/**/*"
-require: []
+require:
+- actioncable
+- actionmailer
+- actionpack
+- actionview
+- activejob
+- activemodel
+- activerecord
+- activestorage
+- activesupport
 domains: []
 reporters:
-- require_not_found
+- typecheck:strict
 # - rubocop
+# - require_not_found
 formatter:
   rubocop:
     cops: safe

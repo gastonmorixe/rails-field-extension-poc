@@ -1,4 +1,4 @@
-require 'dry-struct'
+require "dry-struct"
 
 module Types
   include Dry.Types()
@@ -33,7 +33,7 @@ class User < BaseStruct
   attribute? :address do
     attribute :address_line_1, Types::String
     attribute :address_line_2, Types::String
-  end # TODO how to make nested hash optional?
+  end
 
   # optional attribute strict: it's optional but requires to be set as nil if unused when instance created .new
   attribute :email, Types::String.optional
@@ -48,7 +48,8 @@ class User < BaseStruct
   attribute :card, Card
 end
 
-user = User.new(id: 2, name: 'Gaston', email: 'gaston@example.com', address: { address_line_1: "hola", address_line_2: "pepe" }, card: { number: "1234", cvv: "421" })
+user = User.new(id: 2, name: "Gaston", email: "gaston@example.com",
+                address: { address_line_1: "hola", address_line_2: "pepe" }, card: { number: "1234", cvv: "421" })
 puts user.inspect
 
 puts User.schema.inspect
@@ -56,7 +57,7 @@ puts User.schema.inspect
 # irb> User.schema
 # => #<Dry::Types[Constructor<Schema<key_fn=.to_sym strict keys={id: Constrained<Nominal<Integer> rule=[type?(Integer)]> name: Constrained<Nominal<String> rule=[type?(String)]> admin: Default<Sum<Constrained<Nominal<TrueClass> rule=[type?(TrueClass)]> | Constrained<Nominal<FalseClass> rule=[type?(FalseClass)]>> value=false> address?: User::Address email: Sum<Constrained<Nominal<NilClass> rule=[type?(NilClass)]> | Constrained<Nominal<String> rule=[type?(String)]>> age?: Constrained<Nominal<Integer> rule=[type?(Integer)]>}> fn=Kernel.Hash>]>
 
-# note: it errors if address is set to nil or anything does doesn't comply the interface of both attributes declared. 
+# NOTE: it errors if address is set to nil or anything does doesn't comply the interface of both attributes declared.
 # not setting address is ok, but seeting nil or wrong contract is not.
 
 # irb> user = User.new(id: 2, name: 'Gaston', email: 'gaston@example.com', address: { address_line_1: "hola", address_line_2: "pepe" })

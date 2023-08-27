@@ -1,32 +1,36 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-ruby '3.2.2'
+ruby "3.2.2"
 
 # Use main development branch of Rails
-gem 'rails' # , github: "rails/rails", branch: "main"
+gem "rails", "~> 7.0" # , github: "rails/rails", branch: "main"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem 'sprockets-rails'
+gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
+gem "sqlite3", "~> 1.4"
 
-gem 'country_select', '~> 8.0'
+gem "country_select", "~> 8.0"
+
+# gem 'colorize'
+gem "rainbow", require: "rainbow/refinement"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '>= 5.0'
+gem "puma", ">= 5.0"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
-gem 'jsbundling-rails'
+gem "jsbundling-rails"
 
-gem 'solargraph', github: 'rocketreferrals/solargraph', branch: 'gm/fix-ffi'
-gem 'solargraph-rails', '~> 1.1.0'
+gem "solargraph", github: "rocketreferrals/solargraph", branch: "gm/fix-ffi"
+gem "solargraph-rails", "~> 1.1.0"
 
-gem 'graphql'
+gem "graphql"
+gem "graphiql-rails", group: :development
 
-gem 'formtastic', '~> 4.0'
+gem "formtastic", "~> 4.0"
 
-gem 'awesome_print', require: 'ap'
+gem "awesome_print", require: "ap"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
@@ -38,9 +42,17 @@ gem 'awesome_print', require: 'ap'
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[windows jruby]
+gem "tzinfo-data", platforms: %i[windows jruby]
 
-gem 'rubocop'
+gem "rubocop", require: false
+gem "rubocop-performance", require: false
+gem "rubocop-rails", require: false
+gem "rubocop-rake", require: false
+# gem 'rubocop-minitest', require: false
+
+# gem 'rubocop-rspec', require: false
+
+gem "rspec"
 
 # Reduces boot times through caching; required in config/boot.rb
 # gem 'bootsnap', require: false
@@ -50,14 +62,20 @@ gem 'rubocop'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'debug', platforms: %i[mri windows]
+  gem "debug", platforms: %i[mri windows]
 end
 
 group :development do
-  gem 'rails-erd'
+  # For https://github.com/prettier/plugin-ruby
+  # gem 'prettier_print'
+  # gem 'syntax_tree'
+  # gem 'syntax_tree-haml'
+  # gem 'syntax_tree-rbs'
+
+  gem "rails-erd"
 
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem 'web-console'
+  gem "web-console"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -65,7 +83,7 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
-  gem 'error_highlight', '>= 0.4.0', platforms: [:ruby]
+  gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
 end
 
 group :test do
@@ -73,4 +91,3 @@ group :test do
   # gem "capybara"
   # gem "selenium-webdriver"
 end
-gem 'graphiql-rails', group: :development

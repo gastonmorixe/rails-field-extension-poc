@@ -11,7 +11,11 @@ module FiledExtensionPoc
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults '7.0'
     # config.autoload_paths += %W[#{config.root}/lib]
-    config.autoload_paths << Rails.root.join('lib')
+    # config.autoload_paths << Rails.root.join('lib')
+
+    config.to_prepare do
+      # Rails.autoloaders.main.ignore(Rails.root.join('lib/field_enforcement'))
+    end
 
     # Configuration for the application, engines, and railties goes here.
     #

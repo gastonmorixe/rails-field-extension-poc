@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_26_050330) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_27_001353) do
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_050330) do
     t.string "phone"
     t.string "address"
     t.string "country"
+    t.string "description"
   end
 
   create_table "employments", force: :cascade do |t|
@@ -36,6 +37,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_050330) do
     t.string "notes"
     t.integer "age"
     t.integer "zipcode"
+    t.string "address1"
+    t.string "address2"
+    t.boolean "is_admin"
+    t.string "country"
   end
 
   add_foreign_key "employments", "companies"

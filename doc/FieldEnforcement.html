@@ -83,27 +83,16 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/field_enforcement.rb</dd>
+    <dd>lib/field_enforcement/instance_methods.rb</dd>
   </dl>
   
 </div>
 
-<h2>Overview</h2><div class="docstring">
-  <div class="discussion">
-    
-<p>Provides enforcement of declared field for ActiveRecord models.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><h2>Defined Under Namespace</h2>
+<h2>Defined Under Namespace</h2>
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="FieldEnforcement/ClassMethods.html" title="FieldEnforcement::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="FieldEnforcement/Utils.html" title="FieldEnforcement::Utils (module)">Utils</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="FieldEnforcement/InstanceMethods.html" title="FieldEnforcement::InstanceMethods (module)">InstanceMethods</a></span>
     
   
     
@@ -116,105 +105,12 @@
 
 
 
-  
-    <h2>
-      Class Method Summary
-      <small><a href="#" class="summary_toggle">collapse</a></small>
-    </h2>
 
-    <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#included-class_method" title="included (class method)">.<strong>included</strong>(base)  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-    </ul>
-  
-
-
-
-  <div id="class_method_details" class="method_details_list">
-    <h2>Class Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="included-class_method">
-  
-    .<strong>included</strong>(base)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/field_enforcement.rb', line 201</span>
-
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span> <span class='kw'>do</span>
-    <span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_base'>base</span>
-      <span class='cvar'>@@processed_classes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-      <span class='kw'>def</span> <span class='id identifier rubyid_processed_classes'>processed_classes</span>
-        <span class='cvar'>@@processed_classes</span>
-      <span class='kw'>end</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="FieldEnforcement/ClassMethods.html" title="FieldEnforcement::ClassMethods (module)">ClassMethods</a></span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_after_initialize'>after_initialize</span> <span class='kw'>do</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_enforce_declared_fields'>enforce_declared_fields</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
 
 </div>
 
       <div id="footer">
-  Generated on Sat Aug 26 02:05:58 2023 by
+  Generated on Sat Aug 26 21:16:49 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>

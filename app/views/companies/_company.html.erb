@@ -8,10 +8,10 @@
       </tr>
     </thead>
     <tbody>
-      <% company.attributes.each do |attr_name, attr_value| %>
+      <% company.class.declared_fields.each do |field| %>
         <tr>
-          <td><strong><%= attr_name.humanize %>:</strong></td>
-          <td><%= attr_value %></td>
+          <td><strong><%= field.name.humanize %>:</strong></td>
+          <td><%= company.send(field.name) %></td>
         </tr>
       <% end %>
     </tbody>
