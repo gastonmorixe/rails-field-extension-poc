@@ -1,13 +1,13 @@
 # Company model
 class Company < ApplicationRecord
   field :id, :integer
+  field :created_at, :datetime
+  field :updated_at, :datetime
   field :name, :string
   field :description, :string
   field :address, :string
   field :country, :string
   field :phone, :string
-  field :created_at, :datetime
-  field :updated_at, :datetime
   field :hello, :string
 
   has_many :employments

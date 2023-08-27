@@ -14,6 +14,11 @@ module Types
       argument :id, ID, required: true
     end
 
+    field :todos, [::Todo.gql_type], null: true
+    field :todo, ::Todo.gql_type, null: true do
+      argument :id, ID, required: true
+    end
+
     field :employments, [::Employment.gql_type], null: true
 
     # Resolvers
@@ -31,6 +36,14 @@ module Types
 
     def user(id:)
       User.where(id:).last
+    end
+
+    def todos
+      Todo.all
+    end
+
+    def todo(id:)
+      Todo.where(id:).last
     end
 
     def employments

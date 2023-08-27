@@ -33,7 +33,7 @@ module FieldEnforcement
       #     potential_renames: []
       #   }
       # @param model [ActiveRecord::Base] the model to check
-      # @return [Hash] the changes detected
+      # @return [Hash, Nil] the changes detected
       def detect_changes(model)
         previous_fields = model.attribute_types.to_h { |k, v| [k.to_sym, v.type] }
         declared_fields = model.declared_fields.to_h do |f|
@@ -51,7 +51,9 @@ module FieldEnforcement
           removed: [],
           renamed: [],
           type_changed: [],
-          potential_renames: []
+          potential_renames: [],
+          associations_added: [],
+          associations_removed: []
         }
 
         # Detect added and type-changed fields
@@ -109,6 +111,25 @@ module FieldEnforcement
           model_changes[:removed].reject! { |f| f[:name] == rename[:from].to_sym }
         end
 
+        # Handle associations changes
+        declared_associations = model.reflections.values.select do |reflection|
+          [:belongs_to].include?(reflection.macro)
+        end
+
+        declared_foreign_keys = declared_associations.map(&:foreign_key).map(&:to_sym)
+        existing_foreign_keys = ActiveRecord::Base.connection.foreign_keys(model.table_name).map(&:options).map { |opt| opt[:column].to_sym }
+
+        associations_added = declared_associations.select do |reflection|
+          !existing_foreign_keys.include?(reflection.foreign_key.to_sym)
+        end
+
+        associations_removed = existing_foreign_keys.select do |foreign_key|
+          !declared_foreign_keys.include?(foreign_key)
+        end.map { |foreign_key| model.reflections.values.find { |reflection| reflection.foreign_key == foreign_key.to_s } }
+
+        model_changes[:associations_added] = associations_added
+        model_changes[:associations_removed] = associations_removed
+
         return model_changes unless model_changes.values.all?(&:empty?)
 
         nil
@@ -129,21 +150,32 @@ module FieldEnforcement
         model_changes.dig(:added)&.each do |change|
           field_type = change[:type]
           field_type_for_db = field_type[:name]
-          # field_type_for_db = GQL_TO_RAILS_TYPE_MAP[field_type.constantize]
-          # field_type_for_gql = RAILS_TO_GQL_TYPE_MAP[field_type.constantize]
-          # TODO: ID should be string / integer? custom mapper
+          # TODO: custom mapper
           migration_code << "    add_column :#{model_name.tableize}, :#{change[:name]}, :#{field_type_for_db}"
         end
 
+        # Handle added associations
+        model_changes.dig(:associations_added)&.each do |assoc|
+          migration_code << "    add_reference :#{model_name.tableize}, :#{assoc.name}, foreign_key: true"
+        end
+
+        # Handle removed associations
+        model_changes.dig(:associations_removed)&.each do |assoc|
+          migration_code << "    remove_reference :#{model_name.tableize}, :#{assoc.name}, foreign_key: true"
+        end
+
+        # Handle removed fields
         model_changes.dig(:removed)&.each do |change|
           migration_code << "    remove_column :#{model_name.tableize}, :#{change[:name]}"
         end
 
+        # Handle renamed fields
         model_changes.dig(:renamed)&.each do |change|
           change_to = change[:to]
           migration_code << "    rename_column :#{model_name.tableize}, :#{change[:from]}, :#{change_to}"
         end
 
+        # Handle fields' type changes
         model_changes.dig(:type_changed)&.each do |change|
           change_to = change[:to]
           migration_code << "    change_column :#{model_name.tableize}, :#{change[:name]}, :#{change_to}"
@@ -153,8 +185,7 @@ module FieldEnforcement
         migration_code << "end"
         migration_code << ""
 
-        # TODO: separate write migration to a method
-        write_migration(migration_code, migration_class_name, timestamp) if write == true
+        write_migration(migration_code, migration_class_name, timestamp) if write
 
         migration_code.join("\n")
       end

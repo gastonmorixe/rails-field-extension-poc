@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Class: EmploymentsController
+  Class: TodosController
   
     &mdash; Documentation by YARD 0.9.34
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "EmploymentsController";
+  pathId = "TodosController";
   relpath = '';
 </script>
 
@@ -36,10 +36,10 @@
       <div id="header">
         <div id="menu">
   
-    <a href="_index.html">Index (E)</a> &raquo;
+    <a href="_index.html">Index (T)</a> &raquo;
     
     
-    <span class="title">EmploymentsController</span>
+    <span class="title">TodosController</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Class: EmploymentsController
+      <div id="content"><h1>Class: TodosController
   
   
   
@@ -78,7 +78,7 @@
           
             <li class="next"><span class='object_link'><a href="ApplicationController.html" title="ApplicationController (class)">ApplicationController</a></span></li>
           
-            <li class="next">EmploymentsController</li>
+            <li class="next">TodosController</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -98,7 +98,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>app/controllers/employments_controller.rb</dd>
+    <dd>app/controllers/todos_controller.rb</dd>
   </dl>
   
 </div>
@@ -136,7 +136,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>POST /employments.</p>
+<p>POST /todos.</p>
 </div></span>
   
 </li>
@@ -160,7 +160,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>DELETE /employments/1.</p>
+<p>DELETE /todos/1.</p>
 </div></span>
   
 </li>
@@ -184,31 +184,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>GET /employments/1/edit.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="private ">
-  <span class="summary_signature">
-    
-      <a href="#employment_params-instance_method" title="#employment_params (instance method)">#<strong>employment_params</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  <span class="note title private">private</span>
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Only allow a list of trusted parameters through.</p>
+<p>GET /todos/1/edit.</p>
 </div></span>
   
 </li>
@@ -232,7 +208,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>GET /employments.</p>
+<p>GET /todos.</p>
 </div></span>
   
 </li>
@@ -256,7 +232,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>GET /employments/new.</p>
+<p>GET /todos/new.</p>
 </div></span>
   
 </li>
@@ -265,7 +241,7 @@
         <li class="private ">
   <span class="summary_signature">
     
-      <a href="#set_employment-instance_method" title="#set_employment (instance method)">#<strong>set_employment</strong>  &#x21d2; Object </a>
+      <a href="#set_todo-instance_method" title="#set_todo (instance method)">#<strong>set_todo</strong>  &#x21d2; Object </a>
     
 
     
@@ -304,7 +280,31 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>GET /employments/1.</p>
+<p>GET /todos/1.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#todo_params-instance_method" title="#todo_params (instance method)">#<strong>todo_params</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Only allow a list of trusted parameters through.</p>
 </div></span>
   
 </li>
@@ -328,7 +328,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>PATCH/PUT /employments/1.</p>
+<p>PATCH/PUT /todos/1.</p>
 </div></span>
   
 </li>
@@ -358,7 +358,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>POST /employments</p>
+<p>POST /todos</p>
 
 
   </div>
@@ -372,24 +372,24 @@
       <pre class="lines">
 
 
-21
-22
 23
 24
 25
 26
 27
 28
-29</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/todos_controller.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
-  <span class='ivar'>@employment</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Employment.html" title="Employment (class)">Employment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_employment_params'>employment_params</span><span class='rparen'>)</span>
+  <span class='ivar'>@todo</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Todo.html" title="Todo (class)">Todo</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_todo_params'>todo_params</span><span class='rparen'>)</span>
 
-  <span class='kw'>if</span> <span class='ivar'>@employment</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
-    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='ivar'>@employment</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Employment was successfully created.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>if</span> <span class='ivar'>@todo</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='ivar'>@todo</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Todo was successfully created.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:new</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:unprocessable_entity</span>
   <span class='kw'>end</span>
@@ -411,7 +411,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>DELETE /employments/1</p>
+<p>DELETE /todos/1</p>
 
 
   </div>
@@ -425,19 +425,17 @@
       <pre class="lines">
 
 
-41
-42
 43
 44
-45</pre>
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/todos_controller.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
-  <span class='ivar'>@employment</span><span class='period'>.</span><span class='id identifier rubyid_destroy!'>destroy!</span>
-  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_employments_url'>employments_url</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Employment was successfully destroyed.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-                               <span class='label'>status:</span> <span class='symbol'>:see_other</span>
+  <span class='ivar'>@todo</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
+  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_todos_url'>todos_url</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Todo was successfully destroyed.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:see_other</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -456,7 +454,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>GET /employments/1/edit</p>
+<p>GET /todos/1/edit</p>
 
 
   </div>
@@ -470,52 +468,13 @@
       <pre class="lines">
 
 
-18</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/todos_controller.rb', line 19</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="employment_params-instance_method">
-  
-    #<strong>employment_params</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(private)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Only allow a list of trusted parameters through.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-54
-55
-56</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 54</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_employment_params'>employment_params</span>
-  <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_require'>require</span><span class='lparen'>(</span><span class='symbol'>:employment</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_permit'>permit</span><span class='lparen'>(</span><span class='symbol'>:company_id</span><span class='comma'>,</span> <span class='symbol'>:user_id</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -534,7 +493,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>GET /employments</p>
+<p>GET /todos</p>
 
 
   </div>
@@ -553,10 +512,10 @@
 7</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 5</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/todos_controller.rb', line 5</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
-  <span class='ivar'>@employments</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Employment.html" title="Employment (class)">Employment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
+  <span class='ivar'>@todos</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Todo.html" title="Todo (class)">Todo</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -575,7 +534,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>GET /employments/new</p>
+<p>GET /todos/new</p>
 
 
   </div>
@@ -589,15 +548,15 @@
       <pre class="lines">
 
 
-13
 14
-15</pre>
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/todos_controller.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
-  <span class='ivar'>@employment</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Employment.html" title="Employment (class)">Employment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@todo</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Todo.html" title="Todo (class)">Todo</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -605,9 +564,9 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="set_employment-instance_method">
+  <h3 class="signature " id="set_todo-instance_method">
   
-    #<strong>set_employment</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(private)</span>
+    #<strong>set_todo</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(private)</span>
   
 
   
@@ -630,15 +589,15 @@
       <pre class="lines">
 
 
-49
 50
-51</pre>
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/todos_controller.rb', line 50</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_set_employment'>set_employment</span>
-  <span class='ivar'>@employment</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Employment.html" title="Employment (class)">Employment</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_set_todo'>set_todo</span>
+  <span class='ivar'>@todo</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Todo.html" title="Todo (class)">Todo</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -657,7 +616,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>GET /employments/1</p>
+<p>GET /todos/1</p>
 
 
   </div>
@@ -671,12 +630,55 @@
       <pre class="lines">
 
 
-10</pre>
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/todos_controller.rb', line 10</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="todo_params-instance_method">
+  
+    #<strong>todo_params</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Only allow a list of trusted parameters through.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55
+56
+57</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/controllers/todos_controller.rb', line 55</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_todo_params'>todo_params</span>
+  <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:todo</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_unsafe_hash'>to_unsafe_hash</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -694,7 +696,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>PATCH/PUT /employments/1</p>
+<p>PATCH/PUT /todos/1</p>
 
 
   </div>
@@ -708,20 +710,20 @@
       <pre class="lines">
 
 
-32
-33
 34
 35
 36
 37
-38</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/employments_controller.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/todos_controller.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
-  <span class='kw'>if</span> <span class='ivar'>@employment</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_employment_params'>employment_params</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='ivar'>@employment</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Employment was successfully updated.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:see_other</span>
+  <span class='kw'>if</span> <span class='ivar'>@todo</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_todo_params'>todo_params</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='ivar'>@todo</span><span class='comma'>,</span> <span class='label'>notice:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Todo was successfully updated.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:see_other</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:edit</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:unprocessable_entity</span>
   <span class='kw'>end</span>

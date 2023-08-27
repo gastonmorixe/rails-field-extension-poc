@@ -1,0 +1,47 @@
+<h2><%= model.class.name&.humanize %> <%= model.id %></h2>
+<div id="<%= dom_id model %>">
+  <table>
+    <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% model.class.declared_fields.each do |field| %>
+      <tr>
+        <td><strong><%= field.name.humanize %>:</strong></td>
+        <td><%= model.send(field.name) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="2">Associations</td>
+    </tr>
+    <% model.class.reflections.each do |reflection_name, reflection| %>
+      <tr>
+        <td><strong><%= reflection.name.to_s.humanize %>:</strong></td>
+        <td><%=
+          unless (associated_model = model.send(reflection.name)).nil?
+            display_text = if associated_model.respond_to?("name")
+                             associated_model.name
+                           elsif associated_model.respond_to?("id")
+                             associated_model.id
+                           else
+                             associated_model
+                           end
+
+            # Generate the link to the show action
+            link_path = url_for(associated_model) rescue nil # Replace :admin with your namespace if different
+
+            if link_path
+              link_to(display_text, link_path)
+            else
+              display_text
+            end
+          end
+        %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
