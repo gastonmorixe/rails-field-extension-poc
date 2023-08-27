@@ -16,7 +16,7 @@ module FieldEnforcement
   end
 
   def self.included(base)
-    base.extend(ClassMethods)
+    # base.extend(ClassMethods)
     base.after_initialize do
       self.class.enforce_declared_fields
     end
