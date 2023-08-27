@@ -31,7 +31,9 @@ module FieldEnforcement
       # Check if type is a valid GraphQL type
       # GraphQL::Types.const_get(type) if type.is_a?(Symbol) || type.is_a?(String)
       unless Utils.valid_type?(type)
-        raise Errors::FieldEnforcementUnknownTypeError.new("Declared field '#{name}' in class '#{self.name}' of unknown type '#{type}'. Allowed types are: #{Utils.allowed_types.join(', ')}.")
+        raise Errors::FieldEnforcementUnknownTypeError.new("
+          Declared field '#{name}' in class '#{self.name}' of unknown type '#{type}'. Allowed types are: #{Utils.allowed_types.join(', ')}.
+        ")
       end
 
       declared_fields << OpenStruct.new(name: name.to_s, type:, null:, index:)
@@ -98,7 +100,7 @@ module FieldEnforcement
         raise "You have extra methods declared in #{name}: #{extra_methods.join(', ')}. Please remove them or declare them as fields."
       end
 
-      unless has_changes.nil?
+      if has_changes
         error_message = <<~STRING
 
           ----------------
@@ -120,3 +122,4 @@ module FieldEnforcement
       end
     end
   end
+end

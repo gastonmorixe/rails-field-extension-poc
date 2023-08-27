@@ -4,6 +4,7 @@ require "field_enforcement"
 class User < ApplicationRecord
   field :id, :integer
   field :name, :string
+  field :nickname, :string
   field :age, :integer
   field :address1, :string
   field :address2, :string
