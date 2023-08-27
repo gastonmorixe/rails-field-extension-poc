@@ -14,7 +14,12 @@ class User < ApplicationRecord
   field :created_at, :datetime
   field :updated_at, :datetime
   field :is_admin, :boolean
+  field :hi_user, :string
 
   has_many :employments
   has_many :companies, through: :employments
+
+  def hi_user
+    "hello #{name}"
+  end
 end
