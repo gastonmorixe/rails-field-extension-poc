@@ -1,5 +1,3 @@
-require "field_enforcement"
-
 # User model
 class User < ApplicationRecord
   field :id, :integer
